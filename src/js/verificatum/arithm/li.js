@@ -796,27 +796,14 @@ var sub = function (w, x, y) {
  * @memberof verificatum.arithm.li
  */
 var muladd_loop = function (w, x, start, end, Y, i, c) {
+    memory.set(x.concat(w)); // TODO: copy only what we access
+    // or:
+    // memory.set(x);
+    // memory.set(w, x.length);
+    c = wasm_muladd_loop(x.length, start, end, Y, i, c);
 
-    // Temporary variables in muladd.
-    var hx;
-    var lx;
-    var cross;
+    w.splice(start + i, end - start, ...memory.slice(x.length + start + i, x.length + end + i));
 
-    // Extract upper and lower halves of Y.
-    var hy = M4_HIGH(Y);
-    var ly = M4_LOW(Y);
-
-    // This implies:
-    // hy < 2^(M4_HALF_WORDSIZE + 1)
-    // ly < 2^M4_HALF_WORDSIZE
-
-    // The invariant of the loop is c < 2^(M4_WORDSIZE + 1).
-    for (var j = start; j < end; j++) {
-
-        M4_WORD_MULADD2(w[j + i],x[j],hy,ly,c,hx,lx,cross);
-    }
-
-    // This is a (M4_WORDSIZE + 1)-bit word when Y is.
     return c;
 };
 

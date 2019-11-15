@@ -24,6 +24,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+var wasm_muladd_loop;
+var memory;
+
 var benchworker = function () {
 
 var randomSource = null;
@@ -57,15 +60,27 @@ onmessage = function(e) {
 
     if (command == "importScripts") {
 
-        importScripts(e.data[1] + '/min-vjsc-M4_VJSC_VERSION.js');
-        crypto = verificatum.crypto;
-        benchmark = verificatum.benchmark;
-        arithm = verificatum.arithm;
-        hashfunction = crypto.sha256;
-        randomSource = new crypto.SHA256PRG();
-        randomSource.setSeed(e.data[2]);
+        memory = new WebAssembly.Memory({initial: 1});
+        fetch(e.data[1] + '/wasm/optimized.wasm').then(response =>
+            response.arrayBuffer()
+        ).then(bytes => {
+            return WebAssembly.compile(bytes);
+        }).then(results => {
+            return WebAssembly.instantiate(results, {env: {memory: memory}});
+        }).then(instance => {
+            wasm_muladd_loop = instance.exports.muladd_loop;
+            memory = new Uint32Array(memory.buffer);
 
-        postMessage(["importScripts"]);
+            importScripts(e.data[1] + '/min-vjsc-M4_VJSC_VERSION.js');
+            crypto = verificatum.crypto;
+            benchmark = verificatum.benchmark;
+            arithm = verificatum.arithm;
+            hashfunction = crypto.sha256;
+            randomSource = new crypto.SHA256PRG();
+            randomSource.setSeed(e.data[2]);
+
+            postMessage(["importScripts"]);
+        }).catch(console.error);
 
     } else {
 

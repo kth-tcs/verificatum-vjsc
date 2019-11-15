@@ -116,11 +116,13 @@ BINSRC=src/bin
 JSSRC=src/js
 HTMLSRC=src/html
 JSONSRC=src/json
+WASMSRC=src/wasm
 
 TOOLS=tools
 M4=m4
 BIN=bin
 JS=js
+WASM=wasm
 BENCH=bench-vjsc
 API=api-vjsc
 STATANA=$(TOOLS)/staticanalysis
@@ -157,15 +159,21 @@ $(JS)/benchworker-$(VJSC_VERSION).js: $(JSSRC)/benchworker.js
 # Generate HTML directory that runs benchmarks. This assumes that no
 # functionality of the library has been omitted when building and that
 # all groups used are present.
-bench-vjsc: $(M4SRC)/macros.m4 $(M4SRC)/arithm.m4 $(M4)/version.m4 $(JS)/min-$(VJSC).js $(JS)/benchworker-$(VJSC_VERSION).js $(HTMLSRC)/bench-vjsc.html $(HTMLSRC)/bench-vjsc.css
+bench-vjsc: $(M4SRC)/macros.m4 $(M4SRC)/arithm.m4 $(M4)/version.m4 $(JS)/min-$(VJSC).js $(JS)/benchworker-$(VJSC_VERSION).js $(HTMLSRC)/bench-vjsc.html $(HTMLSRC)/bench-vjsc.css wasm
 	@mkdir -p $(BENCH)/
 	cp $(JS)/min-$(VJSC).js $(JS)/benchworker-$(VJSC_VERSION).js $(BENCH)/
 	cat $(M4SRC)/macros.m4 $(M4SRC)/arithm.m4 $(M4)/version.m4 $(HTMLSRC)/bench-vjsc.html | m4 > $(BENCH)/bench-vjsc.html
 	cp $(HTMLSRC)/bench-vjsc.css $(BENCH)/
+	cp -r $(WASM)/ $(BENCH)/
 	@rm -f $(BENCH)-*.tar.gz
 	tar cvf $(BENCH)-$(VJSC_VERSION).tar $(BENCH)
 	gzip $(BENCH)-$(VJSC_VERSION).tar
 
+
+# XXX: these two calls can be parallelized by using seperate targets with wildcards
+wasm: $(WASMSRC)/muladd.ts
+	asc $(WASMSRC)/muladd.ts -b $(WASM)/optimized.wasm -t $(WASM)/optimized.wat --sourceMap --validate --optimize --runtime none --importMemory
+	asc $(WASMSRC)/muladd.ts -b $(WASM)/untouched.wasm -t $(WASM)/untouched.wat --sourceMap --validate --debug --runtime none --importMemory
 
 #############################################################################
 ############### Development Targets Below ###################################
@@ -237,7 +245,7 @@ $(STATANA)/eslint/eslint_report.txt: $(JS)/$(VJSC).js
 
 # Library including test code.
 test_vjsc: $(JS)/test-$(VJSC).js
-$(JS)/test-$(VJSC).js: $(JS)/$(VJSC).js $(M4)/test_filter.m4 $(VERIFICATUM_FILES)
+$(JS)/test-$(VJSC).js: $(JS)/$(VJSC).js $(M4)/test_filter.m4 $(VERIFICATUM_FILES) wasm
 	@mkdir -p $(JS)
 	$(TOOLS)/compilejs $(TMP_DIR) $(M4)/test_filter.m4 $(JSHEADER) $(JSSRC) $(JSSRC)/verificatum/test_verificatum.js $(JS)/test-$(VJSC).js
 
