@@ -39,7 +39,7 @@ M4_INCLUDE(verificatum/dev/dev.js)dnl
 dnl Test utility functions.
 M4_INCLUDEOPT(verificatum/util/test_util.js)dnl
 
-dnl Test extended input and output routines. 
+dnl Test extended input and output routines.
 M4_INCLUDEOPT(verificatum/eio/test_eio.js)dnl
 
 dnl Test arithmetic.

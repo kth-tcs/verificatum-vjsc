@@ -71,7 +71,7 @@ var hash = (function () {
     var f;
     var g;
     var h;
-    
+
     var S0;
     var S1;
     var ch;
@@ -140,7 +140,7 @@ var hash = (function () {
             S0 = rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22);
             maj = a & b ^ a & c ^ b & c;
             temp2 = S0 + maj | 0;
- 
+
             h = g;
             g = f;
             f = e;

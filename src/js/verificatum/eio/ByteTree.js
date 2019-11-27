@@ -58,7 +58,7 @@
  * @memberof verificatum.eio
  */
 function ByteTree(value) {
-    
+
     if (verificatum.util.ofType(value, "array")) {
         if (typeof value[0] === "number") {
             this.type = ByteTree.LEAF;
@@ -299,7 +299,7 @@ ByteTree.prototype.toPrettyStringInner = function (indent) {
         }
         s += "\n" + indent + "]";
         return s;
-        
+
     } else {
         throw Error("Unknown type! (" + this.type + ")");
     }

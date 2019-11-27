@@ -50,7 +50,7 @@ var getIndices = function (maxWidth) {
     }
     return indices;
 };
-    
+
 onmessage = function(e) {
 
     var command = e.data[0];
@@ -68,7 +68,7 @@ onmessage = function(e) {
         postMessage(["importScripts"]);
 
     } else {
-        
+
         var minSamples = e.data[1];
         var params = e.data.slice(1);
 
@@ -101,7 +101,7 @@ onmessage = function(e) {
                 benchmark.grpIntTable("Exps", exps, pGroupNames, results);
             postMessage(["FixModPow.exp", tableString]);
 
-        } else if (command == "ElGamal") {        
+        } else if (command == "ElGamal") {
             var indices = getIndices(maxWidth);
             var pGroupNames = ["modp3072", "modp4096", "modp6144",
                                "P-256", "secp384r1", "P-521"];
@@ -118,7 +118,7 @@ onmessage = function(e) {
             postMessage(["ElGamal", tableString]);
 
         } else if (command == "ElGamalZKPoKWriteIn") {
-        
+
             var indices = getIndices(maxWidth);
             var pGroupNames = ["modp3072", "modp4096", "modp6144",
                                "P-256", "secp384r1", "P-521"];
@@ -136,7 +136,7 @@ onmessage = function(e) {
             postMessage(["ElGamalZKPoKWriteIn", tableString]);
 
         } else if (command == "NaorYung") {
-        
+
             var indices = getIndices(maxWidth);
             var pGroupNames = ["modp3072", "modp4096", "modp6144",
                                "P-256", "secp384r1", "P-521"];

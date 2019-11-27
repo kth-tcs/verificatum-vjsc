@@ -108,7 +108,7 @@ M4_INCLUDE(verificatum/arithm/test_primes.js)dnl
             }
             var newPPRing = new verificatum.arithm.PPRing(newPRings);
 
-            if (!newPPRing.equals(pPRing)) {                
+            if (!newPPRing.equals(pPRing)) {
                 var e = "Projecting to parts and taking product failed!";
                 test.error(e);
             }
@@ -135,7 +135,7 @@ M4_INCLUDE(verificatum/arithm/test_primes.js)dnl
             }
             i++;
         }
-        test.end();    
+        test.end();
     };
 
     var run = function (testTime) {

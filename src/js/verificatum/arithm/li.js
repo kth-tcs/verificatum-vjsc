@@ -1656,7 +1656,7 @@ var div_qr = (function () {
 
         // Make copy of y.
         set(ny, y);
-        
+
         // Determine a normalization distance.
         normdist =
         (M4_WORDSIZE - (msbit(ny) + 1) % M4_WORDSIZE) % M4_WORDSIZE;
@@ -1709,7 +1709,7 @@ var div_qr = (function () {
 
     /** @lends */
     return function (w, x, y) {
-        
+
         // Index of most significant word of x.
         var n;
 
@@ -2255,7 +2255,7 @@ var hex = function (x) {
     return util.byteArrayToHex(dense.reverse());
 };
 
-        
+
 var hex_to_li = function (s) {
     var b = util.hexToByteArray(s);
     var r = b.reverse();

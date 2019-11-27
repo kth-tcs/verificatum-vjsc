@@ -59,7 +59,7 @@ var test_SigmaProof = (function () {
             for (var l = 0; l < proof.length; l++) {
 
                 if (rand[l] == 0) {
-                    
+
                     // Introduce random single-bit errors in each byte.
                     var modproof = proof.slice();
                     modproof[l] ^= (1 << (epsilon[l] % 8));

@@ -75,7 +75,7 @@ var today = function () {
  * @memberof verificatum.benchmark
  */
 var browser = function () {
-        
+
     if (!!window.opr && !!opr.addons || !!window.opera ||
         navigator.userAgent.indexOf(" OPR/") >= 0) {
         return "Opera 8.0+";
@@ -99,7 +99,7 @@ var browser = function () {
 /* eslint-enable no-implicit-coercion */
 /* eslint-enable no-undef */
 /* eslint-enable no-extra-boolean-cast */
-    
+
 /**
  * @description Formats a list of benchmark results.
  * @param pGroupNames List of names of groups.
@@ -150,7 +150,7 @@ var grpIntTable = function (header, indices, pGroupNames, results) {
     return s;
 };
 
-    
+
     return {
         "today": today,
         "browser": browser,

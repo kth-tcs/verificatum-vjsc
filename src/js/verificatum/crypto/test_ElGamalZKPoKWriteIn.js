@@ -52,7 +52,7 @@ var test_ElGamalZKPoKWriteIn = (function () {
             while (keyWidth <= maxKeyWidth) {
 
                 var yGroup = arithm.PGroup.getWideGroup(pGroups[i], keyWidth);
-                
+
                 for (var l = 0; l < 2; l++) {
 
                     var ny = new crypto.ElGamalZKPoKWriteIn(l === 0,
