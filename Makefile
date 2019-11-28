@@ -288,7 +288,7 @@ README: $(JSSRC)/verificatum/README.js
 # Generate documentation of API.
 api-vjsc: $(JS)/$(VJSC).js
 	@mkdir -p $(API)
-	$(HOME)/node_modules/jsdoc/jsdoc.js --destination $(API) --verbose $(JS)/$(VJSC).js
+	jsdoc --destination $(API) --verbose $(JS)/$(VJSC).js
 	cp $(API)/verificatum.html $(API)/index.html
 	@rm -f $(API)-$(VJSC_VERSION).tar.gz
 	@rm -f $(API)-$(VJSC_VERSION).tar
