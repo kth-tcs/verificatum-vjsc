@@ -1,3 +1,14 @@
+## Quick notes about the WASM fork
+
+For the benchmark run
+`make bench-vjsc && cd bench-vjsc && python3 -m http.server`
+or instead of python's built-in
+[http.server](https://docs.python.org/3/library/http.server.html) use whichever
+HTTP server of your choice.
+Finally, point your browser to <http://localhost:8000/bench-vjsc.html>.
+
+For the tests, `make check` should work.
+
 # Building the Library
 
 This library requires `emacs` to indent generated files. You can edit
