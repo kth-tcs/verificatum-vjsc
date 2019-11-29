@@ -1,3 +1,21 @@
+/**
+ * @description Implementation of muladd_loop() in AssemblyScript.
+ *
+ * Please see {@link verificatum.li.muladd_loop} for more information about
+ * muladd.
+ *
+ * The w and x input arrays need to be written into WebAssembly's linear memory
+ * to be accessed by this function. Starting from the start of the memory, write
+ * x and then write w right after. w is modified in place.
+ *
+ * @param xlen Length of array to be scaled.
+ * @param start Start index into x.
+ * @param end End index into x.
+ * @param Y Scalar.
+ * @param i Index into w.
+ * @param c Input carry.
+ * @return Finally carry.
+ */
 export function muladd_loop(xlen: i32, start: i32, end: i32, Y: i32, i: i32, c: i32): i32 {
     var hy = (Y >>> 14);
     var ly = (Y & 0x3fff);
