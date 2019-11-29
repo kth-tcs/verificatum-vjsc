@@ -802,7 +802,12 @@ var muladd_loop = function (w, x, start, end, Y, i, c) {
     // memory.set(w, x.length);
     c = wasm_muladd_loop(x.length, start, end, Y, i, c);
 
-    w.splice(start + i, end - start, ...memory.slice(x.length + start + i, x.length + end + i));
+    // XXX: The following .splice method should have been significantly better
+    // performance-wise but it is really slow. Should figure out why.
+    // w.splice(start + i, end - start, ...memory.slice(x.length + start + i, x.length + end + i));
+    for (var j = start; j < end; j++) {
+        w[j + i] = memory[x.length + j + i];
+    }
 
     return c;
 };
