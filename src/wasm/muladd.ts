@@ -1,3 +1,5 @@
+// XXX: use m4 to replace macros in original muladd code
+// XXX: this code can be also generated using m4 from the original javascript implementation
 /**
  * @description Implementation of muladd_loop() in AssemblyScript.
  *
