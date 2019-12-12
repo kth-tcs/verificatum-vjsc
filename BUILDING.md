@@ -7,6 +7,10 @@ or instead of python's built-in
 HTTP server of your choice.
 Finally, point your browser to <http://localhost:8000/bench-vjsc.html>.
 
+To run the script, first install dependencies with
+`apt install firefox-geckodriver chromium-chromedriver python3-selenium`
+and then run `./bench.py`.
+
 For the tests, `make check` should work.
 
 # Building the Library
