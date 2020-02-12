@@ -38,3 +38,7 @@ export function muladd_loop(xlen: i32, start: i32, end: i32, Y: i32, i: i32, c: 
 
     return c;
 }
+
+export function main(): i32 {
+	return muladd_loop(0, 10, 25, 1250, 0, 0);
+}
