@@ -28,6 +28,20 @@
 // ############## Javascript Verificatum Crypto Libary ##################
 // ######################################################################
 
+var wasm_muladd_loop;
+var memory;
+if (typeof require !== "undefined") {
+	// Node JS
+    const fs = require('fs');
+    memory = new WebAssembly.Memory({initial: 1});
+    wasm_muladd_loop = new WebAssembly.Instance(new
+        WebAssembly.Module(fs.readFileSync("./wasm/optimized.wasm")), {
+        env:
+            {memory: memory}
+    }).exports.muladd_loop;
+    memory = new Uint32Array(memory.buffer);
+}
+
 M4_NEEDS(verificatum/arithm/arithm.js)dnl
 M4_NEEDS(verificatum/crypto/crypto.js)dnl
 
@@ -63,3 +77,8 @@ M4_INCLUDEOPT(verificatum/benchmark/benchmark.js)dnl
 M4_EXPOPT(verificatum/benchmark/benchmark.js,benchmark)
     };
 })();
+
+if (typeof require !== "undefined") {
+    // Make verificatum available in Node
+    module.exports.verificatum = verificatum;
+}

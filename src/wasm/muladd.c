@@ -1,5 +1,14 @@
-#define SIZE 1024
+#define SIZE 8989
 int buffer[SIZE];
+
+int tmp(int len, int start, int value) {
+    int result = 0;
+    for (int i = start; i < len; i ++ ){
+        result+=buffer[i];
+        buffer[i] = value;
+    }
+    return result;
+}
 
 int muladd_loop(int xlen, int start, int end, int Y, int i, int c) {
     int hy = (Y >> 14);  // XXX: was >>>
