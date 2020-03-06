@@ -60,16 +60,19 @@ onmessage = function(e) {
 
     if (command == "importScripts") {
 
-        memory = new WebAssembly.Memory({initial: 1});
         fetch(e.data[1] + '/wasm/optimized.wasm').then(response =>
             response.arrayBuffer()
         ).then(bytes => {
             return WebAssembly.compile(bytes);
         }).then(results => {
-            return WebAssembly.instantiate(results, {env: {memory: memory}});
+            return WebAssembly.instantiate(results);
         }).then(instance => {
             wasm_muladd_loop = instance.exports.muladd_loop;
-            memory = new Uint32Array(memory.buffer);
+            var offset = instance.exports.get_buffer();
+            // XXX: the hardcoded value can be replaced by exporting the size from inside WebAssembly
+            memory = new Uint32Array(instance.exports.memory.buffer, offset, 8989);
+            console.log('offset: ' + offset);
+            console.log('new memory: ' + memory.length);
 
             importScripts(e.data[1] + '/min-vjsc-M4_VJSC_VERSION.js');
             crypto = verificatum.crypto;

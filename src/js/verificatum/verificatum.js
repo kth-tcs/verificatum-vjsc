@@ -31,15 +31,14 @@
 var wasm_muladd_loop;
 var memory;
 if (typeof require !== "undefined") {
-	// Node JS
+    // Node JS
     const fs = require('fs');
-    memory = new WebAssembly.Memory({initial: 1});
-    wasm_muladd_loop = new WebAssembly.Instance(new
-        WebAssembly.Module(fs.readFileSync("./wasm/optimized.wasm")), {
-        env:
-            {memory: memory}
-    }).exports.muladd_loop;
-    memory = new Uint32Array(memory.buffer);
+    const instance = new WebAssembly.Instance(new
+    WebAssembly.Module(fs.readFileSync("./wasm/optimized.wasm")), {env: {}}
+    );
+    wasm_muladd_loop = instance.exports.muladd_loop;
+    var offset = instance.exports.get_buffer();
+    memory = new Uint32Array(instance.exports.memory.buffer, offset, 8989);
 }
 
 M4_NEEDS(verificatum/arithm/arithm.js)dnl
