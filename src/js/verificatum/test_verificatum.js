@@ -25,15 +25,6 @@
 // SOFTWARE.
 
 
-const fs = require('fs');
-var wasm_muladd_loop;
-var memory = new WebAssembly.Memory({initial: 1});
-
-WebAssembly.instantiate(new Uint8Array(fs.readFileSync('wasm/optimized.wasm')), {env: {memory: memory}}).then(result => {
-
-wasm_muladd_loop = result.instance.exports.muladd_loop;
-memory = new Uint32Array(memory.buffer);
-
 M4_NEEDS(verificatum/verificatum.js)dnl
 M4_NEEDS(verificatum/dev/dev.js)dnl
 M4_NEEDS(verificatum/arithm/test_arithm.js)dnl
@@ -89,5 +80,3 @@ var startMessage =
 console.log(startMessage);
 
 test_verificatum.run(testTime);
-
-}).catch(console.error);
