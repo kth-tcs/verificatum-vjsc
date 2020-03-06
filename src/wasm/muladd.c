@@ -1,4 +1,4 @@
-const int SIZE = 1024 * 10;
+#define SIZE 1024
 int buffer[SIZE];
 
 int muladd_loop(int xlen, int start, int end, int Y, int i, int c) {
@@ -21,6 +21,6 @@ int muladd_loop(int xlen, int start, int end, int Y, int i, int c) {
     return c;
 }
 
-int main(void) {
-    return muladd_loop(0, 10, 25, 1250, 0, 0);
+int* get_buffer() {
+    return &buffer[0];
 }
